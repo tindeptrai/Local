@@ -1,0 +1,20 @@
+name: Hello CI
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  say_hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Print message
+        run: echo "Hello ĐắkAres, CI đang chạy!"
+
+      - name: Show current directory
+        run: ls -la
