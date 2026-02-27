@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Token Management Section
-                    SectionTitle(title: "🔑 Access Token", icon: Icons.key),
+                    const SectionTitle(title: "🔑 Access Token", icon: Icons.key),
                     Card(
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 24),
 
                     // Actions Section
-                    SectionTitle(title: "⚡ Thao tác", icon: Icons.bolt),
+                    const SectionTitle(title: "⚡ Thao tác", icon: Icons.bolt),
                     Card(
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // Loading overlay
               if (provider.isLoading)
                 Container(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withValues(),
                   child: const Center(
                     child: Card(
                       child: Padding(
@@ -185,10 +185,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _handleCheck(String type) async {
+    final provider = context.read<AppProvider>();
     final result = type == "check-in"
-        ? await context.read<AppProvider>().checkIn()
-        : await context.read<AppProvider>().checkOut();
-
+        ? await provider.checkIn()
+        : await provider.checkOut();
     if (mounted) {
       final message = result['message'] as String;
       _showSnackBar(message);

@@ -37,10 +37,10 @@ class ApiLogsDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => context.read<AppProvider>().clearApiLogs(),
-          child: const Text('Xóa logs'),
           style: TextButton.styleFrom(
             foregroundColor: Theme.of(context).colorScheme.error,
           ),
+          child: const Text('Xóa logs'),
         ),
         ElevatedButton(
           onPressed: () => Navigator.pop(context),

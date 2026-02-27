@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'dart:math';
 import '../constants/app_constants.dart';
 
 class ApiLogger {
-  static List<String> _logs = [];
+  static final List<String> _logs = [];
 
   static void addLog(String log) {
     final timestamp = DateTime.now().toString();
@@ -71,7 +70,6 @@ ${body != null ? formatJson(body) : '   (empty)'}
         .join("\n");
 
     final statusIcon = statusCode >= 200 && statusCode < 300 ? "✅" : "❌";
-    final statusColor = statusCode >= 200 && statusCode < 300 ? "SUCCESS" : "ERROR";
 
     return '''
 📥 ──────────────────────────────────────────────────────────────────────

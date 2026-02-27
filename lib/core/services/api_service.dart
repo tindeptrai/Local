@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../constants/api_endpoints.dart';
 import '../constants/app_constants.dart';
@@ -109,7 +109,9 @@ class ApiService {
         body: body != null ? jsonEncode(body) : null,
       );
 
-      print(requestLog);
+      if (kDebugMode) {
+        print(requestLog);
+      }
       ApiLogger.addLog(requestLog);
 
       final response = await http.post(
@@ -126,7 +128,9 @@ class ApiService {
         type: logType,
       );
 
-      print(responseLog);
+      if (kDebugMode) {
+        print(responseLog);
+      }
       ApiLogger.addLog(responseLog);
 
       return response;
@@ -137,7 +141,9 @@ class ApiService {
         type: logType,
       );
 
-      print(errorLog);
+      if (kDebugMode) {
+        print(errorLog);
+      }
       ApiLogger.addLog(errorLog);
 
       return null;

@@ -56,9 +56,9 @@ class _ApiConfigDialogState extends State<ApiConfigDialog> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3),
+                color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Theme.of(context).colorScheme.outline.withOpacity(0.3)),
+                border: Border.all(color: Theme.of(context).colorScheme.outline.withValues()),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
