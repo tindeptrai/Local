@@ -1,23 +1,32 @@
-name: Hello CI
+name: Flutter Analyze CI
 
 on:
+  pull_request:
+    branches: ["main"]
   push:
-    branches: [ "main" ]
-  workflow_dispatch:
+    branches: ["main"]
 
 jobs:
-  say_hello:
+  analyze:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Print message
-        run: echo "Hello ĐắkAres, CI đang chạy!"
+      # Cài Flutter
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.24.3
+          channel: stable
+          cache: true
 
-      - name: Show current directory
-        run: ls -la
-        
-      - name: Show current branch
-        run: echo $GITHUB_REF  
+      - name: Check Flutter version
+        run: flutter --version
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Analyze project
+        run: flutter analyze
