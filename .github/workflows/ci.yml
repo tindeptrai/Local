@@ -1,32 +1,35 @@
-name: Flutter Analyze CI
+name: Flutter CI
 
 on:
   pull_request:
     branches: ["main"]
   push:
     branches: ["main"]
+  workflow_dispatch:
 
 jobs:
-  analyze:
+  analyze_and_test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # Cài Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.35.5
+          flutter-version: 3.24.3
           channel: stable
           cache: true
 
-      - name: Check Flutter version
+      - name: Flutter version
         run: flutter --version
 
-      - name: Get dependencies
+      - name: Pub get
         run: flutter pub get
 
-      - name: Analyze project
+      - name: Analyze
         run: flutter analyze
+
+      - name: Test
+        run: flutter test
