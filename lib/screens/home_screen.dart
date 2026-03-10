@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
 import '../widgets/section_title.dart';
 import '../widgets/custom_text_field.dart';
+import '../widgets/single_selection_widget.dart';
 import 'dialogs/api_config_dialog.dart';
 import 'dialogs/api_logs_dialog.dart';
 
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _tokenController = TextEditingController();
+  String _selectedAction = "check-in";
 
   @override
   void initState() {
@@ -101,28 +103,53 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             const SizedBox(height: 16),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: OutlinedButton.icon(
-                                    onPressed: (provider.isLoading || !provider.hasToken) ? null : () => _handleCheck("check-in"),
-                                    icon: const Icon(Icons.login),
-                                    label: const Text("Check-in"),
-                                  ),
+                            SingleSelectionWidget<String>(
+                              title: "Chọn loại thao tác",
+                              selectedValue: _selectedAction,
+                              options: const [
+                                SingleSelectionOption<String>(
+                                  value: "check-in",
+                                  label: "Check-in",
+                                  icon: Icons.login,
                                 ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: FilledButton.icon(
-                                    onPressed: (provider.isLoading || !provider.hasToken) ? null : () => _handleCheck("check-out"),
-                                    icon: const Icon(Icons.logout),
-                                    label: const Text("Check-out"),
-                                    style: FilledButton.styleFrom(
-                                      backgroundColor: Theme.of(context).colorScheme.error,
-                                      foregroundColor: Theme.of(context).colorScheme.onError,
-                                    ),
-                                  ),
+                                SingleSelectionOption<String>(
+                                  value: "check-out",
+                                  label: "Check-out",
+                                  icon: Icons.logout,
                                 ),
                               ],
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedAction = value;
+                                });
+                              },
+                            ),
+                            const SizedBox(height: 12),
+                            SizedBox(
+                              width: double.infinity,
+                              child: FilledButton.icon(
+                                onPressed: (provider.isLoading || !provider.hasToken)
+                                    ? null
+                                    : () => _handleCheck(_selectedAction),
+                                icon: Icon(
+                                  _selectedAction == "check-in"
+                                      ? Icons.login
+                                      : Icons.logout,
+                                ),
+                                label: Text(
+                                  _selectedAction == "check-in"
+                                      ? "Thực hiện Check-in"
+                                      : "Thực hiện Check-out",
+                                ),
+                                style: _selectedAction == "check-out"
+                                    ? FilledButton.styleFrom(
+                                        backgroundColor:
+                                            Theme.of(context).colorScheme.error,
+                                        foregroundColor:
+                                            Theme.of(context).colorScheme.onError,
+                                      )
+                                    : null,
+                              ),
                             ),
                           ],
                         ),
